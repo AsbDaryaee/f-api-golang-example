@@ -15,11 +15,11 @@ func main() {
 		fmt.Printf("--> Random Fact: %+v \n", *randomFactResponse)
 	}
 
-	FactByIdResponse, FactByIdError := api.GetFactById(16)
+	factByIdResponse, factByIdError := api.GetFactById(16)
 
-	if FactByIdError != nil {
-		fmt.Println(FactByIdError)
+	if factByIdError != nil {
+		fmt.Println(factByIdError)
 	} else {
-		fmt.Printf("--> Fact By ID: %+v \n", *FactByIdResponse)
+		fmt.Printf("--> Fact By ID: %+v \n", *factByIdResponse)
 	}
 }
