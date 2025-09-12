@@ -7,14 +7,19 @@ import (
 
 func main() {
 
-	fmt.Println("----> Fetching Data Started")
-	defer fmt.Println("----> Fetching Data Finished")
+	randomFactResponse, randomFactError := api.GetARandomFact()
 
-	response, err := api.GetARandomFact()
-
-	if err != nil {
-		fmt.Println(err)
+	if randomFactError != nil {
+		fmt.Println(randomFactError)
 	} else {
-		fmt.Printf("%+v \n", *response)
+		fmt.Printf("--> Random Fact: %+v \n", *randomFactResponse)
+	}
+
+	FactByIdResponse, FactByIdError := api.GetFactById(16)
+
+	if FactByIdError != nil {
+		fmt.Println(FactByIdError)
+	} else {
+		fmt.Printf("--> Fact By ID: %+v \n", *FactByIdResponse)
 	}
 }

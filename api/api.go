@@ -36,3 +36,32 @@ func GetARandomFact() (*Fact, error) {
 
 	return &fetchedFact, nil
 }
+
+func GetFactById(factId int) (*Fact, error) {
+	url := fmt.Sprintf(apiBaseUrl, fmt.Sprintf("api/facts/%d", factId))
+
+	response, err := http.Get(url)
+
+	if err != nil {
+		return nil, err
+	}
+
+	if response.StatusCode != http.StatusOK {
+		return nil, fmt.Errorf("%s , Something happened on fetching data.", response.Status)
+	}
+
+	bodyBytes, readBytesError := io.ReadAll(response.Body)
+
+	if readBytesError != nil {
+		return nil, readBytesError
+	}
+
+	var fetchedFact Fact
+	decodeError := json.Unmarshal(bodyBytes, &fetchedFact)
+
+	if decodeError != nil {
+		return nil, decodeError
+	}
+
+	return &fetchedFact, nil
+}
